@@ -20,7 +20,7 @@ app.use("/api/v1/tasks", taskRoutes); // Use /api/v1/tasks as a prefix for all r
 // データベース接続
 const start = async () => { // 非同期処理を行う関数を定義
     try {
-        await connectDB(process.env.MONGO_URL); // Connect to the database
+        await connectDB(process.env.MONGO_HEROKU_URL || process.env.MONGO_URL); // Connect to the database
         app.listen(process.env.PORT || PORT , console.log("Server is running on port", PORT)); // If connected, start the server
     } catch (error) {
         console.log(error);
