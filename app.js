@@ -6,7 +6,7 @@ app.use(express.static('./public')); // Serve static files
 
 require('dotenv').config(); // Import dotenv
 
-const taskRoutes = require('./routes/tasks'); // Import tasks.js
+const taskRoutes = require('./routes/taskRoutes'); // Import tasks.js
 const connectDB = require('./db/connect'); // Import connect.js
 
 const PORT = 5000;

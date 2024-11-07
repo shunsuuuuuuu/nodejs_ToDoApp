@@ -1,7 +1,7 @@
-const Task = require('../models/Task'); // Import the Task model. Task はスキーマの名前
+const taskModel = require('../models/taskModel'); // Import the task model. taskModel はスキーマの名前
 
 const getAllTasks = async (req, res) => {
-    const allTasks = await Task.find({});
+    const allTasks = await taskModel.find({});
     try {
         res.status(200).json(allTasks); // HTTPステータスコード200(成功)と共にJSON形式のレスポンスをクライアントに送信
     }
@@ -12,7 +12,7 @@ const getAllTasks = async (req, res) => {
 
 const createTasks = async (req, res) => {
     try {
-        const task = await Task.create(req.body);
+        const task = await taskModel.create(req.body);
         res.status(200).json(createTasks); // HTTPステータスコード200(成功)と共にJSON形式のレスポンスをクライアントに送信
     }
     catch (error) {
@@ -22,7 +22,7 @@ const createTasks = async (req, res) => {
 
 const getSingleTasks = async (req, res) => {
     try {
-        const singleTask = await Task.findOne({_id:req.params.id}).exec();
+        const singleTask = await taskModel.findOne({_id:req.params.id}).exec();
         if (!singleTask) {
             return res.status(404).json({ message: `No task with id : ${req.params.id}` }); // HTTPステータスコード404(リソースが見つからない)と共にエラーメッセージをクライアントに送信
         }
@@ -39,12 +39,12 @@ const getSingleTasks = async (req, res) => {
 const updateTasks = async (req, res) => {
     try {
         // exec()は、Mongooseのメソッドの1つで、クエリを実行して結果を返す。
-        const updateTasks = await Task.findOneAndUpdate({_id:req.params.id}, req.body).exec();
+        const updateTasks = await taskModel.findOneAndUpdate({_id:req.params.id}, req.body).exec();
         if (!updateTasks) {
             return res.status(404).json({ message: `No task with id : ${req.params.id}` }); // HTTPステータスコード404(リソースが見つからない)と共にエラーメッセージをクライアントに送信
         }
         else {
-            updatedTask = await Task.findOne({_id:req.params.id}).exec();
+            updatedTask = await taskModel.findOne({_id:req.params.id}).exec();
             return res.status(200).json(updatedTask); // HTTPステータスコード200(成功)と共にJSON形式のレスポンスをクライアントに送信
         }
     }
@@ -55,7 +55,7 @@ const updateTasks = async (req, res) => {
 
 const deleteTask = async (req, res) => {
     try {
-        const deleteTask = await Task.findOneAndDelete({_id:req.params.id});
+        const deleteTask = await taskModel.findOneAndDelete({_id:req.params.id});
         if (!deleteTask) {
             return res.status(404).json({ message: `No task with id : ${req.params.id}` }); // HTTPステータスコード404(リソースが見つからない)と共にエラーメッセージをクライアントに送信
         }
